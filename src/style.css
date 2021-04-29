@@ -1,0 +1,54 @@
+*{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+}
+.container{
+    max-width: 1200px;
+    margin: auto;
+    background-color: #dddddd;
+    padding: 20px;
+}
+
+form{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+form input{
+    width: 100%;
+    outline: 0;
+    border: 1px solid grey;
+    padding: 8px;
+    font-size: 16px;
+}
+
+form button{
+    font-size: 16px;
+    padding: 8px;
+    width: 40px;
+    height: 100%;
+}
+
+ul{
+    list-style-type:square;
+    margin-top: 20px;
+}
+
+li{
+    margin-left: 16px;
+    margin-bottom: 10px;
+    padding: 8px 4px;
+}
+
+li div{
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+ul li:nth-child(odd){
+    background-color: #c5c5c5;
+}
