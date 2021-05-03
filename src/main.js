@@ -1,10 +1,10 @@
 App = {
-    loading: false,
     contracts: {},
     load: async()=>{
         await App.loadWeb3()
         await App.loadAccount()
         await App.loadContract()
+        await App.render()
     },
 
     loadWeb3: async () => {
@@ -45,12 +45,39 @@ App = {
         })
         
     },
+
     loadContract: async() => {
         const todoList = await (await fetch('TodoList.json')).text()
         App.contracts.TodoList = TruffleContract(todoList)
         App.contracts.TodoList.setProvider(App.web3Provider)
 
         App.todoList = await App.contracts.TodoList.deployed()
+        console.log(App.todoList);
+    },
+
+    render: async()=>{
+        if(App.loading){
+            return
+        }
+        await App.renderTask()
+    },
+
+    renderTask: async () => {
+        const taskCount = await App.todoList.taskCount
+        console.log(taskCount);
+        const taskTemp = document.getElementById('task-container')
+
+        for (var i=1; i<= taskCount; i++){
+            const task = await App.todoList.tasks(i)
+            const taskId = task[0].toNumber()
+            const taskContent = task[1]
+            const taskCompleted = task[2] 
+
+            console.log(taskContent, taskcCompleted);
+
+            document.getElementById('checkbox').value = taskCompleted
+            document.getElementById('content').value = taskContent
+        }
     }
 }
 
