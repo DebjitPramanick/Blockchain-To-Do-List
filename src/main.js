@@ -43,16 +43,14 @@ App = {
         window.ethereum.enable().then(accounts => {
             App.account = accounts[0]
         })
-        
     },
 
     loadContract: async() => {
         const todoList = await (await fetch('TodoList.json')).text()
-        App.contracts.TodoList = TruffleContract(todoList)
+        App.contracts.TodoList = TruffleContract(JSON.parse(todoList))
         App.contracts.TodoList.setProvider(App.web3Provider)
 
         App.todoList = await App.contracts.TodoList.deployed()
-        console.log(App.todoList);
     },
 
     render: async()=>{
@@ -63,20 +61,20 @@ App = {
     },
 
     renderTask: async () => {
-        const taskCount = await App.todoList.taskCount
-        console.log(taskCount);
-        const taskTemp = document.getElementById('task-container')
+        const taskCount = await App.todoList.taskCount()
+        console.log(taskCount)
+        const taskTemp = document.getElementById('task-list')
 
-        for (var i=1; i<= taskCount; i++){
+        for (var i=1; i<= taskCount.length; i++){
             const task = await App.todoList.tasks(i)
             const taskId = task[0].toNumber()
             const taskContent = task[1]
             const taskCompleted = task[2] 
 
-            console.log(taskContent, taskcCompleted);
+            
 
-            document.getElementById('checkbox').value = taskCompleted
-            document.getElementById('content').value = taskContent
+            // document.getElementById('checkbox').value = taskCompleted
+            // document.getElementById('content').value = taskContent
         }
     }
 }
