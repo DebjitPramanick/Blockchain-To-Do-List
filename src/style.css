@@ -32,9 +32,13 @@ form button{
     height: 100%;
 }
 
+h3{
+    margin: 26px 0 4px 0;
+}
+
 ul{
     list-style-type:square;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 li{

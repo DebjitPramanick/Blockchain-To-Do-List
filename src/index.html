@@ -14,11 +14,16 @@
 <body>
     <div class="container">
 
-        <form action="">
-            <input placeholder="Add todo..." class="addd-field" id="add-input" >
+        <form action="" onsubmit="App.addTask(); return false">
+            <input placeholder="Add todo..." class="addd-field" id="inputField" >
             <button id="add-btn" type="submit">+</button>
         </form>
-        <ul id="tasklist"></ul>
+
+        <h3>Uncompleted Tasks</h3>
+        <ul id="uc-list"></ul>
+
+        <h3>Completed Tasks</h3>
+        <ul id="c-list"></ul>
     </div>
 
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"

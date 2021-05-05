@@ -41,6 +41,7 @@ App = {
 
     loadAccount: async() => {
         window.ethereum.enable().then(accounts => {
+            console.log(accounts);
             App.account = accounts[0]
         })
     },
@@ -53,6 +54,14 @@ App = {
         App.todoList = await App.contracts.TodoList.deployed()
     },
 
+    addTask: async() => {
+        const content = document.getElementById('inputField').value
+        console.log(content)
+        await App.todoList.createTask(content, {from: App.account})
+        console.log(App.todoList.createTask);
+        window.location.reload()
+    },
+
     render: async()=>{
         if(App.loading){
             return
@@ -63,9 +72,10 @@ App = {
     renderTask: async () => {
         const taskCount = await App.todoList.taskCount()
         console.log(taskCount)
-        const taskTemp = document.getElementById('tasklist')
+        const ucTasks = document.getElementById('uc-list')
+        const cTasks = document.getElementById('c-list')
         
-        for (var i=1; i<= taskCount; i++){
+        for (var i=1; i<= taskCount.words[0]; i++){
             const task = await App.todoList.tasks(i)
             console.log(task);
             const taskId = task[0].toNumber()
@@ -76,7 +86,12 @@ App = {
                                 <input type="checkbox" id="checkbox" ${taskCompleted ? 'checked' : '!checked'}/>
                                 <p id="content">${taskContent}</p>
                             </div>`
-            taskTemp.appendChild(taskEl)
+            if(taskCompleted){
+                cTasks.appendChild(taskEl)
+            }
+            else{
+                ucTasks.appendChild(taskEl)
+            }
         }
     }
 }
