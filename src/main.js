@@ -63,18 +63,20 @@ App = {
     renderTask: async () => {
         const taskCount = await App.todoList.taskCount()
         console.log(taskCount)
-        const taskTemp = document.getElementById('task-list')
-
-        for (var i=1; i<= taskCount.length; i++){
+        const taskTemp = document.getElementById('tasklist')
+        
+        for (var i=1; i<= taskCount; i++){
             const task = await App.todoList.tasks(i)
+            console.log(task);
             const taskId = task[0].toNumber()
             const taskContent = task[1]
             const taskCompleted = task[2] 
-
-            
-
-            // document.getElementById('checkbox').value = taskCompleted
-            // document.getElementById('content').value = taskContent
+            var taskEl = document.createElement('li');
+            taskEl.innerHTML = `<div class="task-container">
+                                <input type="checkbox" id="checkbox" ${taskCompleted ? 'checked' : '!checked'}/>
+                                <p id="content">${taskContent}</p>
+                            </div>`
+            taskTemp.appendChild(taskEl)
         }
     }
 }
