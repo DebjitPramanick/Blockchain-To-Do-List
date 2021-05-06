@@ -83,7 +83,8 @@ App = {
             const taskCompleted = task[2] 
             var taskEl = document.createElement('li');
             taskEl.innerHTML = `<div class="task-container">
-                                <input type="checkbox" id="checkbox" ${taskCompleted ? 'checked' : '!checked'}/>
+                                <input type="checkbox" id=${taskId} ${taskCompleted ? 'checked' : '!checked'} 
+                                onchange="App.markCompleted(event)"/>
                                 <p id="content">${taskContent}</p>
                             </div>`
             if(taskCompleted){
@@ -93,6 +94,13 @@ App = {
                 ucTasks.appendChild(taskEl)
             }
         }
+    },
+
+    markCompleted: async(e) => {
+        const taskId = e.target.id
+        console.log(taskId)
+        await App.todoList.toggleCompleted(taskId, {from: App.account})
+        window.location.reload()
     }
 }
 
