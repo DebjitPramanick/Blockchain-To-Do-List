@@ -56,3 +56,22 @@ li div{
 ul li:nth-child(odd){
     background-color: #c5c5c5;
 }
+
+#content{
+    white-space: nowrap;
+}
+
+#dlt-con{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#dlt-con button{
+    cursor: pointer;
+    background-color: #ff000077;
+    outline: 0;
+    border: 0;
+    font-size: 12px;
+    padding: 6px;
+}

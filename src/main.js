@@ -1,6 +1,6 @@
 App = {
     contracts: {},
-    load: async()=>{
+    load: async () => {
         await App.loadWeb3()
         await App.loadAccount()
         await App.loadContract()
@@ -39,14 +39,14 @@ App = {
         }
     },
 
-    loadAccount: async() => {
+    loadAccount: async () => {
         window.ethereum.enable().then(accounts => {
             console.log(accounts);
             App.account = accounts[0]
         })
     },
 
-    loadContract: async() => {
+    loadContract: async () => {
         const todoList = await (await fetch('TodoList.json')).text()
         App.contracts.TodoList = TruffleContract(JSON.parse(todoList))
         App.contracts.TodoList.setProvider(App.web3Provider)
@@ -54,16 +54,15 @@ App = {
         App.todoList = await App.contracts.TodoList.deployed()
     },
 
-    addTask: async() => {
+    addTask: async () => {
         const content = document.getElementById('inputField').value
-        console.log(content)
-        await App.todoList.createTask(content, {from: App.account})
+        await App.todoList.createTask(content, { from: App.account })
         console.log(App.todoList.createTask);
         window.location.reload()
     },
 
-    render: async()=>{
-        if(App.loading){
+    render: async () => {
+        if (App.loading) {
             return
         }
         await App.renderTask()
@@ -71,35 +70,48 @@ App = {
 
     renderTask: async () => {
         const taskCount = await App.todoList.taskCount()
-        console.log(taskCount)
         const ucTasks = document.getElementById('uc-list')
         const cTasks = document.getElementById('c-list')
-        
-        for (var i=1; i<= taskCount.words[0]; i++){
+
+        for (var i = 1; i <= taskCount.words[0]; i++) {
             const task = await App.todoList.tasks(i)
-            console.log(task);
             const taskId = task[0].toNumber()
             const taskContent = task[1]
-            const taskCompleted = task[2] 
-            var taskEl = document.createElement('li');
-            taskEl.innerHTML = `<div class="task-container">
+            const taskCompleted = task[2]
+            const taskDeleted = task[3]
+            
+            console.log(taskDeleted, task)
+            var ctaskEl = document.createElement('li');
+            var uctaskEl = document.createElement('li');
+            ctaskEl.innerHTML = `<div class="task-container">
                                 <input type="checkbox" id=${taskId} ${taskCompleted ? 'checked' : '!checked'} 
                                 onchange="App.markCompleted(event)"/>
                                 <p id="content">${taskContent}</p>
+                                <div id="dlt-con"><button id=${taskId} onclick={App.deleteTask(event)}>Delete</button></div>
                             </div>`
-            if(taskCompleted){
-                cTasks.appendChild(taskEl)
+            uctaskEl.innerHTML = `<div class="task-container">
+                            <input type="checkbox" id=${taskId} ${taskCompleted ? 'checked' : '!checked'} 
+                            onchange="App.markCompleted(event)"/>
+                            <p id="content">${taskContent}</p>
+                        </div>`
+            if (taskCompleted && !taskDeleted) {
+                cTasks.appendChild(ctaskEl)
             }
-            else{
-                ucTasks.appendChild(taskEl)
+            else if(!taskCompleted && !taskDeleted) {
+                ucTasks.appendChild(uctaskEl)
             }
         }
     },
 
-    markCompleted: async(e) => {
+    markCompleted: async (e) => {
         const taskId = e.target.id
-        console.log(taskId)
-        await App.todoList.toggleCompleted(taskId, {from: App.account})
+        await App.todoList.toggleCompleted(taskId, { from: App.account })
+        window.location.reload()
+    },
+
+    deleteTask: async(e) => {
+        const taskId = e.target.id
+        await App.todoList.toggleDeleted(taskId, { from: App.account })
         window.location.reload()
     }
 }
