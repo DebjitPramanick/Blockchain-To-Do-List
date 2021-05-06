@@ -3,11 +3,26 @@
     font-family: Arial, Helvetica, sans-serif;
     padding: 0;
 }
+
+.header{
+    background-color: #000000b7;
+    color: white;
+    font-size: 22px;
+    padding: 12px;
+}
+
+.header .container{
+    background-color: transparent;
+}
+
 .container{
     max-width: 1200px;
     margin: auto;
+}
+
+.sub{
     background-color: #dddddd;
-    padding: 20px;
+    padding: 12px;
 }
 
 form{

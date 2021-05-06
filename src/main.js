@@ -70,7 +70,7 @@ App = {
 
     renderTask: async () => {
         const taskCount = await App.todoList.taskCount()
-        const ucTasks = document.getElementById('uc-list')
+        const icTasks = document.getElementById('ic-list')
         const cTasks = document.getElementById('c-list')
 
         for (var i = 1; i <= taskCount.words[0]; i++) {
@@ -82,14 +82,14 @@ App = {
             
             console.log(taskDeleted, task)
             var ctaskEl = document.createElement('li');
-            var uctaskEl = document.createElement('li');
+            var ictaskEl = document.createElement('li');
             ctaskEl.innerHTML = `<div class="task-container">
                                 <input type="checkbox" id=${taskId} ${taskCompleted ? 'checked' : '!checked'} 
                                 onchange="App.markCompleted(event)"/>
                                 <p id="content">${taskContent}</p>
                                 <div id="dlt-con"><button id=${taskId} onclick={App.deleteTask(event)}>Delete</button></div>
                             </div>`
-            uctaskEl.innerHTML = `<div class="task-container">
+            ictaskEl.innerHTML = `<div class="task-container">
                             <input type="checkbox" id=${taskId} ${taskCompleted ? 'checked' : '!checked'} 
                             onchange="App.markCompleted(event)"/>
                             <p id="content">${taskContent}</p>
@@ -98,7 +98,7 @@ App = {
                 cTasks.appendChild(ctaskEl)
             }
             else if(!taskCompleted && !taskDeleted) {
-                ucTasks.appendChild(uctaskEl)
+                icTasks.appendChild(ictaskEl)
             }
         }
     },
