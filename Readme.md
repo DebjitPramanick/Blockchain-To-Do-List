@@ -117,6 +117,6 @@ Contributions are what make the open source community such an amazing place to b
 <!-- CONTACT -->
 ## Contact
 
-Twitter - [@P_Debjit](https://twitter.com/P_Debjit) 
-LinkedIn - [Debjit Pramanick](https://www.linkedin.com/in/debjit-pramanick-7a6a971b1/)
+Twitter - [@P_Debjit](https://twitter.com/P_Debjit)<br/> 
+LinkedIn - [Debjit Pramanick](https://www.linkedin.com/in/debjit-pramanick-7a6a971b1/)<br/> 
 Project Link: [https://github.com/DebjitPramanick/Blockcahin-To-Do-List](https://github.com/DebjitPramanick/Blockcahin-To-Do-List)
